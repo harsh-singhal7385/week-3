@@ -1,10 +1,11 @@
-class QueenAttack {
-    constructor(x1, y1, x2, y2) {
-        this.queen1 = {
+class QueenAttackProblem {
+    
+    constructor() {
+        this.firstQueen = {
             x: 0,
             y: 0
         }
-        this.queen2 = {
+        this.secondQueen = {
             x: 0,
             y: 0
         }
@@ -14,36 +15,37 @@ class QueenAttack {
         }
     }
 
-    setQueen1(x, y) {
-        this.queen1.x = x
-        this.queen1.y = y
+    setFirstQueen(x, y) {
+        this.firstQueen.x = x
+        this.firstQueen.y = y
     }
-    setQueen2(x, y) {
-        this.queen2.x = x
-        this.queen2.y = y
+    setSecondQueen(x, y) {
+        this.secondQueen.x = x
+        this.secondQueen.y = y
     }
 
-    getQueens() {
-        return [this.queen1, this.queen2]
+    getQueensFromProblem() {
+        return [this.firstQueen, this.secondQueen]
     }
 
     checkHorizontal() {
-        if (this.queen1.y === this.queen2.y) { return true }
+        if (this.firstQueen.y === this.secondQueen.y) { return true }
         else { return false }
     }
     checkVertical() {
-        if (this.queen1.x === this.queen2.x) { return true }
+        if (this.firstQueen.x === this.secondQueen.x) { return true }
         else { return false }
     }
     checkDiagonal() {
-        let x = this.queen1.x-1
-        let y = this.queen1.y-1
+        let x = this.firstQueen.x-1
+        let y = this.firstQueen.y-1
 
-        //check left top
-        console.log("left top")
+        //checking left top condition
+
+        console.log("We are at left top")
         while (x >= 0 && y >= 0) {
 
-            if (x === this.queen2.x && y === this.queen2.y) {
+            if (x === this.secondQueen.x && y === this.secondQueen.y) {
                 console.log("here")
                 return true
             }
@@ -52,14 +54,16 @@ class QueenAttack {
             y -= 1
         }
 
-        x = this.queen1.x-1
-        y = this.queen1.y+1
-        //check left bottom
-        console.log("left bottom")
+        x = this.firstQueen.x-1
+        y = this.firstQueen.y+1
+
+        // checking left bottom condition
+
+        console.log("We are at left bottom")
         while (x >= 0 && y <= this.matrix.y) {
 
             console.log(x, y)
-            if (x === this.queen2.x && y === this.queen2.y) {
+            if (x === this.secondQueen.x && y === this.secondQueen.y) {
                 return true
             }
 
@@ -67,14 +71,16 @@ class QueenAttack {
             y += 1
         }
 
-        x = this.queen1.x+1
-        y = this.queen1.y-1
-        //check right top
-        console.log("right top")
+        x = this.firstQueen.x+1
+        y = this.firstQueen.y-1
+
+        // checking right top condition
+
+        console.log("We are at right top")
         while (x <= this.matrix.x && y >= 0) {
 
             console.log(x, y)
-            if (x === this.queen2.x && y === this.queen2.y) {
+            if (x === this.secondQueen.x && y === this.secondQueen.y) {
                 return true
             }
 
@@ -82,13 +88,16 @@ class QueenAttack {
             y -= 1
         }
 
-        x = this.queen1.x + 1
-        y = this.queen1.y + 1
-        //check right bottom
-        console.log("right bottom")
+        x = this.firstQueen.x + 1
+        y = this.firstQueen.y + 1
+
+        //checking right bottom condition
+
+
+        console.log("We are at right bottom")
         while (x <= this.matrix.x && y <= this.matrix.y) {
             console.log(x, y)
-            if (x === this.queen2.x && y === this.queen2.y) {
+            if (x === this.secondQueen.x && y === this.secondQueen.y) {
                 return true
             }
             x += 1
@@ -98,26 +107,31 @@ class QueenAttack {
         return false
     }
 
-    canAttack() {
+    possibilityOfAttack() {
         return this.checkHorizontal() || this.checkVertical() || this.checkDiagonal()
     }
 }
 
-function getFormData() {
-    let x1 = parseInt(document.getElementById('q-1-x').value)
-    let y1 = parseInt(document.getElementById('q-1-y').value)
-    let x2 = parseInt(document.getElementById('q-2-x').value)
-    let y2 = parseInt(document.getElementById('q-2-y').value)
-    return [x1, y1, x2, y2]
+
+
+async function getQueenOutput() {
+    let x1,y1,x2,y2;
+    
+    x1 = ""   // take user input here for x1
+    y1 = ""   // take user input here for y1
+    x2 = ""   // take user input here for x2
+    y2 = ""   // take user input here for y2
+    
+    let queen_attack_problem = new QueenAttackProblem();
+    
+    queen_attack_problem.setFirstQueen(x1 , y1);
+    queen_attack_problem.setSecondQueen(x2 , y2);
+    
+    console.log(queen_attack_problem.getQueensFromProblem());
+    console.log(queen_attack_problem.possibilityOfAttack());
+    let output;
+    await (output = queen_attack_problem.possibilityOfAttack());
+    console.log(output);
 }
 
-function handleSubmitQ2() {
-    let arr = getFormData()
-    let qa = new QueenAttack()
-    qa.setQueen1(arr[0], arr[1])
-    qa.setQueen2(arr[2], arr[3])
-    console.log(qa.getQueens())
-    console.log(qa.canAttack())
-    let res = document.getElementById('attack-result')
-    res.innerHTML = qa.canAttack()
-}
+getQueenOutput()

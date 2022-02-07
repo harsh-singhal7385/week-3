@@ -17,13 +17,10 @@ fetch('https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movie
     return res.json()
 })
 .then((data)=>{
-
-    final_actor = getActorsList(data)
-    final_genre = getGenresList(data)
-
+    
     obj = {
-        actors: final_actor,
-        Genres: final_genre
+        actors: getActorsList(data),
+        Genres: getGenresList(data)
     }
     return obj
     
@@ -38,14 +35,14 @@ fetch('https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movie
 
 
 function getActorsList(data){
-    
+    actor_movies = new Set()
     for(let val of data){
         actors = val.cast
         length_actors = actors.length
         title = val.title
         
         for(let valu of actors){
-            if(valu !== null || valu !== undefined || isNaN(valu)){
+            if(valu !== null || valu !== undefined || isNaN(valu || valu != "")){
                 actor_movies.add(valu)
             }
         }
@@ -78,7 +75,7 @@ function getActorsList(data){
 }
 
 function getGenresList(data){
-
+    genres_movies = new Set()
     for(let val of data){
         genres = val.cast
         length_genres = genres.length
@@ -118,7 +115,7 @@ function getGenresList(data){
     return expected_output
 }
 async function Q1(){
-
+    
     await getData()
 }
 

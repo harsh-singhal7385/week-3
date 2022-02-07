@@ -1,10 +1,10 @@
-const data = require('./battles.json')
+// const data = require('./battles.json')
 let output_obj = {}
-
-attacker_king = {}
-defender_king = {}
-region = {}
-name_obj = {}
+import fetch from 'cross-fetch';
+let attacker_king = {}
+let defender_king = {}
+let region = {}
+let name_obj = {}
 
 let most_active_attacker_king = ""
 let most_active_defender_king = ""
@@ -28,6 +28,15 @@ let sum = 0
 let count = 0
 let defender_size = []
     
+//  for getting issue in accessing file / api
+// copy of this code is kept in temp_Q1.js which is working perfectly fine
+function getData(){
+
+fetch('./battles.json')
+    .then((res)=>{
+        return res.json
+    })
+    .then((data)=>{
 
     for(let a of data){
         
@@ -177,5 +186,18 @@ let defender_size = []
         'max' : max
         }
     }
-
+}).then((result)=>{
     console.log(final_obj)
+})
+.catch((error)=>{
+        console.log(error)
+})
+
+}
+// console.log(final_obj)
+async function Q1(){
+    await getData()
+}
+
+
+Q1()  // calling Q3()
